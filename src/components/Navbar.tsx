@@ -8,7 +8,7 @@ const Navbar = () => {
   return (
     <AppBar position="static">
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        {/* BlogIt Logo */}
+        
         <Typography
           variant="h6"
           component={Link}
@@ -18,7 +18,7 @@ const Navbar = () => {
           BlogIt
         </Typography>
 
-        {/* Conditional Buttons */}
+        
         <Box>
           {!user ? (
             <>
