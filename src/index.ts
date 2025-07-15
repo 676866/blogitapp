@@ -9,7 +9,7 @@ import { verifyToken, AuthRequest } from './middleware/authMiddleware';
 const app: Express = express();
 const client = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecretkey';
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5175","https://blogitapp.vercel.app"];
+const allowedOrigins = ["https://blogitapp.vercel.app"];
 
 app.use(cors({
   origin: (origin, callback) => {
