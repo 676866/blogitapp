@@ -1,57 +1,88 @@
-import { Box, Container, Link, Typography } from "@mui/material";
+import { Box, Container, Typography, Link, Stack } from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
+import ArticleIcon from "@mui/icons-material/Article";
+import LoginIcon from "@mui/icons-material/Login";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import EmailIcon from "@mui/icons-material/Email";
+import PhoneIcon from "@mui/icons-material/Phone";
 
 const Footer = () => {
-
   return (
     <Box
       component="footer"
       sx={{
-        mt: "auto",
-        py: { xs: 4, md: 6 },
-        px: 2,
         background: "linear-gradient(135deg, #1e3c72, #2a5298)",
-        color: "#ffffff",
+        color: "#fff",
+        py: { xs: 4, md: 6 },
+        mt: 8,
       }}
     >
       <Container maxWidth="lg">
-        
-        <Box sx={{ mb: 4 }}>
-          <Typography variant="h6" gutterBottom>
-            About BlogIt
-          </Typography>
-          <Typography variant="body2">
-            BlogIt is your go-to platform for writing, sharing, and discovering blogs that inspire.
-          </Typography>
-        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            justifyContent: "space-between",
+            gap: 4,
+          }}
+        >
+          {/* About */}
+          <Box sx={{ flex: 1 }}>
+            <Typography variant="h6" gutterBottom>
+              About <strong>BlogIt</strong>
+            </Typography>
+            <Typography variant="body2">
+              BlogIt is your go-to platform for writing, sharing, and discovering blogs that inspire.
+              Built with React, MUI & Node.js.
+            </Typography>
+          </Box>
 
-        
-        <Box sx={{ mb: 4 }}>
-          <Typography variant="h6" gutterBottom>
-            Quick Links
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-            <Link href="/" underline="hover" color="inherit">
-              Home
-            </Link>
-            <Link href="/blogs" underline="hover" color="inherit">
-              Blogs
-            </Link>
-            <Link href="/login" underline="hover" color="inherit">
-              Login
-            </Link>
-            <Link href="/register" underline="hover" color="inherit">
-              Register
-            </Link>
+          {/* Quick Links */}
+          <Box sx={{ flex: 1 }}>
+            <Typography variant="h6" gutterBottom>
+              Quick Links
+            </Typography>
+            <Stack spacing={1}>
+              <Link href="/" color="inherit" underline="hover" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <HomeIcon fontSize="small" />
+                Home
+              </Link>
+              <Link href="/blogs" color="inherit" underline="hover" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <ArticleIcon fontSize="small" />
+                Blogs
+              </Link>
+              <Link href="/login" color="inherit" underline="hover" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <LoginIcon fontSize="small" />
+                Login
+              </Link>
+              <Link href="/register" color="inherit" underline="hover" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <PersonAddIcon fontSize="small" />
+                Register
+              </Link>
+            </Stack>
+          </Box>
+
+          {/* Contact */}
+          <Box sx={{ flex: 1 }}>
+            <Typography variant="h6" gutterBottom>
+              Contact
+            </Typography>
+            <Stack spacing={1}>
+              <Typography variant="body2" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <EmailIcon fontSize="small" />
+                frankit@blogit.com
+              </Typography>
+              <Typography variant="body2" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <PhoneIcon fontSize="small" />
+                +254 794 603 876
+              </Typography>
+            </Stack>
           </Box>
         </Box>
 
-        <Box>
-          <Typography variant="h6" gutterBottom>
-            Contact
-          </Typography>
-          <Typography variant="body2">Email: frankit@blogit.com</Typography>
-          <Typography variant="body2">Phone: +254 794 603 876</Typography>
-          <Typography variant="body2" sx={{ mt: 2 }}>
+        {/* Copyright */}
+        <Box sx={{ mt: 4, textAlign: "center" }}>
+          <Typography variant="body2">
             © {new Date().getFullYear()} <strong>BlogIt</strong>. All rights reserved.
           </Typography>
         </Box>
