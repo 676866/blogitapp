@@ -3,6 +3,8 @@ import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { Container, Typography } from "@mui/material";
 import BlogCard from "../components/BlogCard";
+import SimpleFooter from '../components/footer'
+
 
 type Blog = {
   id: string;
@@ -37,17 +39,21 @@ const MyBlogsPage = () => {
   }, [user]);
 
   return (
-    <Container sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        My Blogs
-      </Typography>
+    <>
+      <Container sx={{ mt: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          My Blogs
+        </Typography>
 
-      {Array.isArray(myBlogs) && myBlogs.length > 0 ? (
-        myBlogs.map((blog) => <BlogCard key={blog.id} blog={blog} />)
-      ) : (
-        <Typography>Loading...</Typography>
-      )}
-    </Container>
+        {Array.isArray(myBlogs) && myBlogs.length > 0 ? (
+          myBlogs.map((blog) => <BlogCard key={blog.id} blog={blog} />)
+        ) : (
+          <Typography>Loading...</Typography>
+        )}
+      </Container>
+
+      <SimpleFooter /> 
+    </>
   );
 };
 

@@ -10,11 +10,12 @@ import {
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import SimpleFooter from "../components/footer"
 
 const CreateBlogPage = () => {
   const [title, setTitle] = useState("");
   const [synopsis, setSynopsis] = useState("");
-  const [featuredImg, setFeaturedImg] = useState(""); 
+  const [featuredImg, setFeaturedImg] = useState("");
   const [content, setContent] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -39,7 +40,7 @@ const CreateBlogPage = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5678/api/blogs", 
+        "http://localhost:5678/api/blogs",
         {
           title,
           synopsis,
@@ -48,81 +49,85 @@ const CreateBlogPage = () => {
         },
         {
           headers: {
-        Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         }
       );
 
-          console.log("Blog created:", res.data);
+      console.log("Blog created:", res.data);
       setSuccess(true);
       navigate("/blogs");
     } catch (err: any) {
       console.error("Create blog error:", err.response);
-         setError(err.response?.data?.message || "Failed to create blog");
+      setError(err.response?.data?.message || "Failed to create blog");
     }
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Create New Blog
-      </Typography>
+    <>
+      <Container maxWidth="sm" sx={{ mt: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          Create New Blog
+        </Typography>
 
-      {error && (
-    <Alert severity="error" sx={{ mb: 2 }}>
-          {error}
-        </Alert>
-      )}
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
 
-      {success && (
-        <Alert severity="success" sx={{ mb: 2 }}>
-       Blog created successfully!
-        </Alert>
-      )}
+        {success && (
+          <Alert severity="success" sx={{ mb: 2 }}>
+            Blog created successfully!
+          </Alert>
+        )}
 
-      <Box component="form" onSubmit={handleSubmit} noValidate>
-        <TextField
-         fullWidth
-          label="Title"
-         value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          sx={{ mb: 2 }}
+        <Box component="form" onSubmit={handleSubmit} noValidate>
+          <TextField
+            fullWidth
+            label="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            sx={{ mb: 2 }}
             required
-        />
-        <TextField
-          fullWidth
-          label="Synopsis"
-          value={synopsis}
-          onChange={(e) => setSynopsis(e.target.value)}
-          multiline
-          rows={3}
-          sx={{ mb: 2 }}
-          required
-        />
-        <TextField
-          fullWidth
-          label="Featured Image URL"
-          value={featuredImg}
-          onChange={(e) => setFeaturedImg(e.target.value)}
-          sx={{ mb: 2 }}
-          required
-        />
-        <TextField
-          fullWidth
-          label="Content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          multiline
-          rows={6}
-          sx={{ mb: 3 }}
-          required
-        />
-        <Button type="submit" variant="contained" fullWidth>
-          Create Blog
-        </Button>
-      </Box>
-    </Container>
+          />
+          <TextField
+            fullWidth
+            label="Synopsis"
+            value={synopsis}
+            onChange={(e) => setSynopsis(e.target.value)}
+            multiline
+            rows={3}
+            sx={{ mb: 2 }}
+            required
+          />
+          <TextField
+            fullWidth
+            label="Featured Image URL"
+            value={featuredImg}
+            onChange={(e) => setFeaturedImg(e.target.value)}
+            sx={{ mb: 2 }}
+            required
+          />
+          <TextField
+            fullWidth
+            label="Content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            multiline
+            rows={6}
+            sx={{ mb: 3 }}
+            required
+          />
+          <Button type="submit" variant="contained" fullWidth>
+            Create Blog
+          </Button>
+        </Box>
+      </Container>
+
+      <SimpleFooter /> 
+    </>
   );
 };
 

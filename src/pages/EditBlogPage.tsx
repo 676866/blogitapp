@@ -11,6 +11,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { toast } from "react-hot-toast";
+import SimpleFooter from "../components/footer"
 
 const EditBlogPage = () => {
   const { id } = useParams();
@@ -71,74 +72,86 @@ const EditBlogPage = () => {
 
   if (!token) {
     return (
-      <Container sx={{ mt: 4 }}>
-        <Typography color="error">You must be logged in to edit blogs.</Typography>
-      </Container>
+      <>
+        <Container sx={{ mt: 4 }}>
+          <Typography color="error">
+            You must be logged in to edit blogs.
+          </Typography>
+        </Container>
+        <SimpleFooter /> 
+      </>
     );
   }
 
   if (loading) {
     return (
-      <Container sx={{ mt: 4, textAlign: "center" }}>
-        <CircularProgress />
-      </Container>
+      <>
+        <Container sx={{ mt: 4, textAlign: "center" }}>
+          <CircularProgress />
+        </Container>
+        <SimpleFooter /> 
+      </>
     );
   }
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Edit Blog
-      </Typography>
-
-      {error && (
-        <Typography color="error" sx={{ mb: 2 }}>
-          {error}
+    <>
+      <Container maxWidth="sm" sx={{ mt: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          Edit Blog
         </Typography>
-      )}
 
-      <Box component="form" onSubmit={handleSubmit} noValidate>
-        <TextField
-          fullWidth
-          label="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          sx={{ mb: 2 }}
-          required
-        />
-        <TextField
-          fullWidth
-          label="Synopsis"
-          value={synopsis}
-          onChange={(e) => setSynopsis(e.target.value)}
-          multiline
-          rows={2}
-          sx={{ mb: 2 }}
-          required
-        />
-        <TextField
-          fullWidth
-          label="Featured Image URL"
-          value={featuredImg}
-          onChange={(e) => setFeaturedImg(e.target.value)}
-          sx={{ mb: 2 }}
-          required
-        />
-        <TextField
-          fullWidth
-          label="Content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          multiline
-          rows={8}
-          sx={{ mb: 3 }}
-          required
-        />
-        <Button type="submit" variant="contained" fullWidth>
-          Update Blog
-        </Button>
-      </Box>
-    </Container>
+        {error && (
+          <Typography color="error" sx={{ mb: 2 }}>
+            {error}
+          </Typography>
+        )}
+
+        <Box component="form" onSubmit={handleSubmit} noValidate>
+          <TextField
+            fullWidth
+            label="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            sx={{ mb: 2 }}
+            required
+          />
+          <TextField
+            fullWidth
+            label="Synopsis"
+            value={synopsis}
+            onChange={(e) => setSynopsis(e.target.value)}
+            multiline
+            rows={2}
+            sx={{ mb: 2 }}
+            required
+          />
+          <TextField
+            fullWidth
+            label="Featured Image URL"
+            value={featuredImg}
+            onChange={(e) => setFeaturedImg(e.target.value)}
+            sx={{ mb: 2 }}
+            required
+          />
+          <TextField
+            fullWidth
+            label="Content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            multiline
+            rows={8}
+            sx={{ mb: 3 }}
+            required
+          />
+          <Button type="submit" variant="contained" fullWidth>
+            Update Blog
+          </Button>
+        </Box>
+      </Container>
+
+      <SimpleFooter /> 
+    </>
   );
 };
 

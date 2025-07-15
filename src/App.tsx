@@ -15,12 +15,11 @@ import CreateBlogPage from "./pages/CreateBlogPage";
 import EditBlogPage from './pages/EditBlogPage';
 import MyBlogsPage from './pages/MyBlogsPage';
 
-
 const App = () => {
   return (
     <Router>
       <Navbar />
-       <Toaster /> 
+       <Toaster /> m
       <Routes>
    <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />

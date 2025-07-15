@@ -11,7 +11,9 @@ import {
 import ReactMarkdown from "react-markdown";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useAuth } from "../context/AuthContext"; 
+import { useAuth } from "../context/AuthContext";
+import SimpleFooter from "../components/footer"; 
+
 interface Blog {
   id: string;
   title: string;
@@ -31,7 +33,7 @@ const BlogDetailsPage = () => {
   const navigate = useNavigate();
   const [blog, setBlog] = useState<Blog | null>(null);
   const [loading, setLoading] = useState(true);
-  const { user, token } = useAuth(); 
+  const { user, token } = useAuth();
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -80,75 +82,77 @@ const BlogDetailsPage = () => {
   const isAuthor = user?.username === blog.author.username;
 
   return (
-    <Container maxWidth="md" sx={{ mt: 4 }}>
-      <Typography variant="h3" fontWeight="bold" gutterBottom>
-        {blog.title}
-      </Typography>
-      <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+    <>
+      <Container maxWidth="md" sx={{ mt: 4 }}>
+        <Typography variant="h3" fontWeight="bold" gutterBottom>
+          {blog.title}
+        </Typography>
+        <Typography variant="subtitle1" color="textSecondary" gutterBottom>
           {blog.synopsis}
         </Typography>
 
-      <Typography variant="subtitle2"   style={{ fontWeight: 'bold', color: '#000' }}> 
-        By {blog.author.firstName} {blog.author.lastName} •{" "}
-        {new Date(blog.createdAt).toLocaleDateString(undefined, {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}
-      </Typography>
+        <Typography variant="subtitle2" style={{ fontWeight: 'bold', color: '#000' }}>
+          By {blog.author.firstName} {blog.author.lastName} •{" "}
+          {new Date(blog.createdAt).toLocaleDateString(undefined, {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </Typography>
 
-      {blog.featuredImg && (
-        <Card sx={{  
-          width: '45%',
-          maxHeight: 300,
-          objectFit: 'cover',
-          borderRadius: 2,
-          my: 3
-             
-          }}>
-
-          
-
-          <CardMedia
-            component="img"
-            height="300"
-            image={blog.featuredImg}
-            alt={blog.title}
-          />
-        </Card>
-      )}
-
-      <Box   sx={{
-    mt: 2,
-    whiteSpace: "pre-line",
-    '& > *:first-of-type::first-letter': {
-      fontSize: '2.5rem',
-      fontWeight: 'bold',
-      float: 'left',
-      lineHeight: '1',
-      pr: 1,
-    },
-  }}
->
-        <ReactMarkdown>{blog.content}</ReactMarkdown>
-      </Box>
-
-      
-      {isAuthor && (
-        <Box sx={{ mt: 4, display: "flex", gap: 2 }}>
-          <Button
-            variant="outlined"
-            component={Link}
-            to={`/blogs/${blog.id}/edit`}
+        {blog.featuredImg && (
+          <Card
+            sx={{
+              width: '45%',
+              maxHeight: 300,
+              objectFit: 'cover',
+              borderRadius: 2,
+              my: 3,
+            }}
           >
-            Edit
-          </Button>
-          <Button variant="contained" color="error" onClick={handleDelete}>
-            Delete
-          </Button>
+            <CardMedia
+              component="img"
+              height="300"
+              image={blog.featuredImg}
+              alt={blog.title}
+            />
+          </Card>
+        )}
+
+        <Box
+          sx={{
+            mt: 2,
+            whiteSpace: "pre-line",
+            '& > *:first-of-type::first-letter': {
+              fontSize: '2.5rem',
+              fontWeight: 'bold',
+              float: 'left',
+              lineHeight: '1',
+              pr: 1,
+            },
+          }}
+        >
+          <ReactMarkdown>{blog.content}</ReactMarkdown>
         </Box>
-      )}
-    </Container>
+
+        {isAuthor && (
+          <Box sx={{ mt: 4, display: "flex", gap: 2 }}>
+            <Button
+              variant="outlined"
+              component={Link}
+              to={`/blogs/${blog.id}/edit`}
+            >
+              Edit
+            </Button>
+            <Button variant="contained" color="error" onClick={handleDelete}>
+              Delete
+            </Button>
+          </Box>
+        )}
+      </Container>
+
+      <SimpleFooter />
+    </>
   );
 };
 

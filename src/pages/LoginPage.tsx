@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
-
+import SimpleFooter from "../components/footer"
 const Login = () => {
   const navigate = useNavigate();
   const { setUser } = useAuth();
@@ -78,72 +78,76 @@ const Login = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Paper elevation={6} sx={{ p: 4, mt: 10, borderRadius: 3 }}>
-        <Typography variant="h4" align="center" gutterBottom>
-          Welcome Back 👋
-        </Typography>
-        <Typography variant="subtitle1" align="center" mb={3}>
-          Login to your BlogIt account
-        </Typography>
+    <>
+      <Container maxWidth="sm">
+        <Paper elevation={6} sx={{ p: 4, mt: 10, borderRadius: 3 }}>
+          <Typography variant="h4" align="center" gutterBottom>
+            Welcome Back 👋
+          </Typography>
+          <Typography variant="subtitle1" align="center" mb={3}>
+            Login to your BlogIt account
+          </Typography>
 
-        <form onSubmit={handleLogin}>
-          <TextField
-            label="Email or Username"
-            fullWidth
-            margin="normal"
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            label="Password"
-            fullWidth
-            margin="normal"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </form>
+          <form onSubmit={handleLogin}>
+            <TextField
+              label="Email or Username"
+              fullWidth
+              margin="normal"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+              label="Password"
+              fullWidth
+              margin="normal"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </form>
 
-        <Box
-          ref={containerRef}
-          sx={{
-            position: "relative",
-            height: "120px",
-            mt: 4,
-          }}
-        >
-          <Button
-            ref={btnRef}
-            type="submit"
-            variant="contained"
-            onMouseEnter={handleMouseEnter}
-            onClick={handleLogin}
+          <Box
+            ref={containerRef}
             sx={{
-              position: "absolute",
-              transition: "all 0.3s ease",
-              fontWeight: "bold",
-              backgroundColor: "#1976d2",
-              ":hover": { backgroundColor: "#115293" },
-              ...btnStyle,
+              position: "relative",
+              height: "120px",
+              mt: 4,
             }}
           >
-            Login
-          </Button>
-        </Box>
+            <Button
+              ref={btnRef}
+              type="submit"
+              variant="contained"
+              onMouseEnter={handleMouseEnter}
+              onClick={handleLogin}
+              sx={{
+                position: "absolute",
+                transition: "all 0.3s ease",
+                fontWeight: "bold",
+                backgroundColor: "#1976d2",
+                ":hover": { backgroundColor: "#115293" },
+                ...btnStyle,
+              }}
+            >
+              Login
+            </Button>
+          </Box>
 
-        <Typography variant="body2" align="center" mt={2}>
-          Don't have an account?{" "}
-          <span
-            onClick={() => navigate("/register")}
-            style={{ color: "#1976d2", cursor: "pointer", fontWeight: 500 }}
-          >
-            Register
-          </span>
-        </Typography>
-      </Paper>
-    </Container>
+          <Typography variant="body2" align="center" mt={2}>
+            Don't have an account?{" "}
+            <span
+              onClick={() => navigate("/register")}
+              style={{ color: "#1976d2", cursor: "pointer", fontWeight: 500 }}
+            >
+              Register
+            </span>
+          </Typography>
+        </Paper>
+      </Container>
+
+      <SimpleFooter /> 
+    </>
   );
 };
 
