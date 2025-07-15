@@ -5,20 +5,29 @@ import {
   Typography,
   Paper,
   Container,
+  Box,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { useAuth } from "../context/AuthContext"; 
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setUser } = useAuth(); 
+  const { setUser } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [btnPosition, setBtnPosition] = useState("center");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email || !password) {
+      toast.error("Please fill in all fields");
+      shiftButton();
+      return;
+    }
+
     try {
       const res = await axios.post("http://localhost:5678/auth/login", {
         identifier: email,
@@ -28,7 +37,6 @@ const Login = () => {
       const token = res.data.token;
       localStorage.setItem("token", token);
 
-      
       const payload = JSON.parse(atob(token.split(".")[1]));
       setUser({
         id: payload.id,
@@ -39,10 +47,16 @@ const Login = () => {
       });
 
       toast.success("Login successful!");
-      navigate("/profile"); 
+      navigate("/profile");
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Login failed");
     }
+  };
+
+  const shiftButton = () => {
+    const positions = ["left", "right", "center"];
+    const next = positions[Math.floor(Math.random() * positions.length)];
+    setBtnPosition(next);
   };
 
   return (
@@ -60,7 +74,6 @@ const Login = () => {
             fullWidth
             margin="normal"
             type="text"
-            required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -69,24 +82,35 @@ const Login = () => {
             fullWidth
             margin="normal"
             type="password"
-            required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
+          <Box
             sx={{
+              display: "flex",
+              justifyContent:
+                btnPosition === "left"
+                  ? "flex-start"
+                  : btnPosition === "right"
+                  ? "flex-end"
+                  : "center",
               mt: 2,
-              py: 1.5,
-              fontWeight: "bold",
-              backgroundColor: "#1976d2",
-              ":hover": { backgroundColor: "#115293" },
             }}
           >
-            Login
-          </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                px: 5,
+                py: 1.5,
+                fontWeight: "bold",
+                backgroundColor: "#1976d2",
+                ":hover": { backgroundColor: "#115293" },
+              }}
+            >
+              Login
+            </Button>
+          </Box>
         </form>
         <Typography variant="body2" align="center" mt={2}>
           Don't have an account?{" "}
