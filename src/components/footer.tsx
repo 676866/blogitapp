@@ -26,18 +26,18 @@ const Footer = () => {
             gap: 4,
           }}
         >
-          {/* About */}
+        
           <Box sx={{ flex: 1 }}>
             <Typography variant="h6" gutterBottom>
               About <strong>BlogIt</strong>
             </Typography>
             <Typography variant="body2">
               BlogIt is your go-to platform for writing, sharing, and discovering blogs that inspire.
-              Built with React, MUI & Node.js.
+             
             </Typography>
           </Box>
 
-          {/* Quick Links */}
+          
           <Box sx={{ flex: 1 }}>
             <Typography variant="h6" gutterBottom>
               Quick Links
@@ -62,7 +62,6 @@ const Footer = () => {
             </Stack>
           </Box>
 
-          {/* Contact */}
           <Box sx={{ flex: 1 }}>
             <Typography variant="h6" gutterBottom>
               Contact
@@ -80,8 +79,12 @@ const Footer = () => {
           </Box>
         </Box>
 
-        {/* Copyright */}
+     
         <Box sx={{ mt: 4, textAlign: "center" }}>
+
+          <Typography variant="body2" sx={{ mb: 1 }}>
+    Built with <span style={{ color: "#ef060eff" }}>❤️</span> by Kober
+  </Typography>
           <Typography variant="body2">
             © {new Date().getFullYear()} <strong>BlogIt</strong>. All rights reserved.
           </Typography>
