@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Button,
   TextField,
@@ -18,13 +18,16 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [btnPosition, setBtnPosition] = useState("center");
+  const [btnStyle, setBtnStyle] = useState({ top: "0px", left: "0px" });
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const btnRef = useRef<HTMLButtonElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const handleLogin = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+
     if (!email || !password) {
       toast.error("Please fill in all fields");
-      shiftButton();
       return;
     }
 
@@ -53,10 +56,25 @@ const Login = () => {
     }
   };
 
-  const shiftButton = () => {
-    const positions = ["left", "right", "center"];
-    const next = positions[Math.floor(Math.random() * positions.length)];
-    setBtnPosition(next);
+  const handleMouseEnter = () => {
+    if (email && password) return;
+
+    if (containerRef.current && btnRef.current) {
+      const container = containerRef.current.getBoundingClientRect();
+      const btnWidth = 120;
+      const btnHeight = 48;
+
+      const maxX = container.width - btnWidth;
+      const maxY = container.height - btnHeight;
+
+      const newLeft = Math.floor(Math.random() * maxX);
+      const newTop = Math.floor(Math.random() * maxY);
+
+      setBtnStyle({
+        left: `${newLeft}px`,
+        top: `${newTop}px`,
+      });
+    }
   };
 
   return (
@@ -68,6 +86,7 @@ const Login = () => {
         <Typography variant="subtitle1" align="center" mb={3}>
           Login to your BlogIt account
         </Typography>
+
         <form onSubmit={handleLogin}>
           <TextField
             label="Email or Username"
@@ -85,33 +104,35 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Box
+        </form>
+
+        <Box
+          ref={containerRef}
+          sx={{
+            position: "relative",
+            height: "120px",
+            mt: 4,
+          }}
+        >
+          <Button
+            ref={btnRef}
+            type="submit"
+            variant="contained"
+            onMouseEnter={handleMouseEnter}
+            onClick={handleLogin}
             sx={{
-              display: "flex",
-              justifyContent:
-                btnPosition === "left"
-                  ? "flex-start"
-                  : btnPosition === "right"
-                  ? "flex-end"
-                  : "center",
-              mt: 2,
+              position: "absolute",
+              transition: "all 0.3s ease",
+              fontWeight: "bold",
+              backgroundColor: "#1976d2",
+              ":hover": { backgroundColor: "#115293" },
+              ...btnStyle,
             }}
           >
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{
-                px: 5,
-                py: 1.5,
-                fontWeight: "bold",
-                backgroundColor: "#1976d2",
-                ":hover": { backgroundColor: "#115293" },
-              }}
-            >
-              Login
-            </Button>
-          </Box>
-        </form>
+            Login
+          </Button>
+        </Box>
+
         <Typography variant="body2" align="center" mt={2}>
           Don't have an account?{" "}
           <span
